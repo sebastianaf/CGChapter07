@@ -6,6 +6,7 @@
 /*global gEngine: false, Transform: false, SpriteRenderable: false */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
+
 // Constructor and object definition
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
 

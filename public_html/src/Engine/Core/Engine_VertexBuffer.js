@@ -8,7 +8,7 @@
  */
 
 /*jslint node: true, vars: true */
-/*global Float32Array */
+/*global gEngine: false, Float32Array: false */
 /* find out more about jslint: http://www.jslint.com/help.html */
 
 "use strict";  // Operate in Strict mode such that variables must be declared before used!
@@ -38,13 +38,6 @@ gEngine.VertexBuffer = (function () {
         1.0, 0.0,
         0.0, 0.0
     ];
-    // this is to support the debugging of physics engine
-    var verticesOfLine = [
-        0.5, 0.5, 0.0,
-        -0.5, -0.5, 0.0
-    ];
-    // reference to the texture positions for the square vertices in the gl context
-    var mLineVertexBuffer = null;
 
     var initialize = function () {
         var gl = gEngine.Core.getGL();
@@ -70,35 +63,21 @@ gEngine.VertexBuffer = (function () {
         // Loads verticesOfSquare into the vertexBuffer
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoordinates), gl.STATIC_DRAW);
         // </editor-fold>
-
-        // <editor-fold desc="Step A: Allocate and store vertex positions into the webGL context">
-        // Create a buffer on the gGL context for our vertex positions
-        mLineVertexBuffer = gl.createBuffer();
-
-        // Connect the vertexBuffer to the ARRAY_BUFFER global gl binding point.
-        gl.bindBuffer(gl.ARRAY_BUFFER, mLineVertexBuffer);
-
-        // Put the verticesOfSquare into the vertexBuffer, as non-changing drawing data (STATIC_DRAW)
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verticesOfLine), gl.STATIC_DRAW);
-        //<editor-fold>
     };
 
     var getGLVertexRef = function () { return mSquareVertexBuffer; };
     var getGLTexCoordRef = function () { return mTextureCoordBuffer; };
-    var getGLLineVertexRef = function () { return mLineVertexBuffer; };
 
     var cleanUp = function () {
         var gl = gEngine.Core.getGL();
         gl.deleteBuffer(mSquareVertexBuffer);
         gl.deleteBuffer(mTextureCoordBuffer);
-        gl.deleteBuffer(mLineVertexBuffer);
     };
 
     var mPublic = {
         initialize: initialize,
         getGLVertexRef: getGLVertexRef,
         getGLTexCoordRef: getGLTexCoordRef,
-        getGLLineVertexRef: getGLLineVertexRef,
         cleanUp: cleanUp
     };
 

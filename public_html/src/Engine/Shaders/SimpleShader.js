@@ -48,7 +48,18 @@ function SimpleShader(vertexShaderPath, fragmentShaderPath) {
         "aSquareVertexPosition"
     );
 
-    // Step E: gets references to the uniform variables: uPixelColor, uModelTransform, and uViewProjTransform
+    // Step E: Activates the vertex buffer loaded in EngineCore_VertexBuffer.js
+    gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRef());
+
+    // Step F: Describe the characteristic of the vertex position attribute
+    gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
+        3,              // each element is a 3-float (x,y.z)
+        gl.FLOAT,       // data type is FLOAT
+        false,          // if the content is normalized vectors
+        0,              // number of bytes to skip in between elements
+        0);             // offsets to the first element
+
+    // Step G: Gets references to the uniform variables: uPixelColor, uModelTransform, and uViewProjTransform
     this.mPixelColor = gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
     this.mModelTransform = gl.getUniformLocation(this.mCompiledShader, "uModelTransform");
     this.mViewProjTransform = gl.getUniformLocation(this.mCompiledShader, "uViewProjTransform");
